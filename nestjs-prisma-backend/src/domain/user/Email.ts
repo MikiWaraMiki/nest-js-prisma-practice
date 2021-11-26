@@ -15,7 +15,7 @@ export class Email {
             throw new Error("メールアドレスの最大長は256文字です")
         }
 
-        if (value.match(Email.EMAIL_REGULAR_PATTERN)) {
+        if (!value.match(Email.EMAIL_REGULAR_PATTERN)) {
             throw new Error("メールアドレスの形式が正しくありません")
         }
 
