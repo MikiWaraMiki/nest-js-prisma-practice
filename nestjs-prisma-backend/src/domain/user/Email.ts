@@ -4,9 +4,9 @@ export class Email {
     private static EMAIL_MAX_LENGTH = 256
 
 
-    readonly value: String
+    readonly value: string
 
-    constructor(value: String) {
+    constructor(value: string) {
         if (!value) {
             throw new Error("メールアドレスの入力は必須です")
         }

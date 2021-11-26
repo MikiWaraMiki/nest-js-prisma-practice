@@ -15,7 +15,6 @@ model User {
     email String @unique
     name String?
     profile UserProfile
-    role Role @default(USER)
     createdAt DateTime @default(now())
 }
 
@@ -25,9 +24,4 @@ model UserProfile {
     text String @db.Text
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-}
-
-enum Role {
-    USER
-    ADMIN
 }

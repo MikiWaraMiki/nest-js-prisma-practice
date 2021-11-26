@@ -2,7 +2,7 @@ import { ulid } from 'ulid'
 
 export class UserId {
     private constructor(
-        public readonly value: String
+        public readonly value: string
     ) {
     }
 
@@ -13,7 +13,7 @@ export class UserId {
         )
     }
 
-    static reConstructor(value: String): UserId {
+    static reConstructor(value: string): UserId {
         return new UserId(value)
     }
 }
