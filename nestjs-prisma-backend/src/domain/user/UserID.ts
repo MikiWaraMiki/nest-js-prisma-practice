@@ -1,9 +1,22 @@
 import { ulid } from 'ulid'
 
 export class UserId {
+    private static USERID_LENGTH = 26
+
+    readonly value: string
+
     private constructor(
-        public readonly value: string
+        value: string
     ) {
+        if(!value) {
+            throw new Error("ユーザーIDは必須です")
+        }
+
+        if(value.length != UserId.USERID_LENGTH ) {
+            throw new Error("ユーザーIDの文字列長が正しくありません")
+        }
+
+        this.value = value
     }
 
     static create(): UserId {
