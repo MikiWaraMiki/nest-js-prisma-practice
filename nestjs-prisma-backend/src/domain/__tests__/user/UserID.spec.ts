@@ -16,6 +16,13 @@ describe("UserID test", () => {
             expect(target).toThrow(Error)
             expect(target).toThrow("ユーザーIDの文字列長が正しくありません")
         })
+        it("26文字のIDの場合はエラーが発生しないこと", () => {
+            const generated = UserId.create()
+
+            const userId = UserId.reConstructor(generated.value)
+
+            expect(userId.value).toEqual(generated.value)
+        })
     })
     describe("UserIDの生成テスト", () => {
         it("26文字のULIDで生成されること", () => {
