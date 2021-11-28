@@ -1,12 +1,18 @@
-import { Prisma } from ".prisma/client";
+import { Prisma, PrismaClient } from ".prisma/client";
 import { Injectable } from "@nestjs/common";
 import { User } from "src/domain/user/User";
+import { UserId } from "src/domain/user/UserID";
+import { UserProfile } from "src/domain/user/UserProfile";
 import { UserRepository } from "src/domain/user/UserRepository";
 import { PrismaService } from "src/infra/repository/prisma/prisma-service";
+import { User as UserRecord, UserProfile as UserProfileRecord} from '.prisma/client'
+import { UserProfileText } from "src/domain/user/UserProfileText";
+import { Email } from "src/domain/user/Email";
+import { Name } from "src/domain/user/Name";
 
 @Injectable()
 export class UserPrismaRepository implements UserRepository {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaClient) {}
 
     async create(user: User): Promise<void> {
         this.prisma.user.create({
@@ -22,5 +28,34 @@ export class UserPrismaRepository implements UserRepository {
                 }
             }
         })
+    }
+
+    async findByUserId(userID: UserId): Promise<User> {
+        const result = await this.prisma.user.findUnique({
+            where: {
+                id: userID.value
+            },
+            include: {
+                profile: true
+            }
+        })
+
+        return this.convertToModelFromRecord(result)
+    }
+
+    private convertToModelFromRecord(record: UserRecord & {
+        profile: UserProfileRecord;
+    }): User {
+        const userId = UserId.reConstructor(record.id)
+        const userProfile = new UserProfile(
+            userId,
+            new UserProfileText(record.profile.text)
+        )
+        return User.reConstructor(
+            userId,
+            new Email(record.email),
+            new Name(record.name),
+            userProfile
+        )
     }
 }
