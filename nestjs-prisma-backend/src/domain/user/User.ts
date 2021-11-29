@@ -9,10 +9,10 @@ export class User {
         public readonly userId: UserId,
         public readonly email: Email,
         public readonly name: Name,
-        public readonly userProfile: UserProfile
     ) {
     }
 
+    /**
     updateProfile(userProfileText: UserProfileText): User {
         const updateUserProfile = new UserProfile(
             this.userId,
@@ -25,8 +25,9 @@ export class User {
             updateUserProfile
         )
     }
+     **/
 
-    static reConstructor(userId: UserId, email: Email, name: Name, userProfile: UserProfile): User {
-        return new User(userId, email, name, userProfile)
+    static reConstructor(userId: UserId, email: Email, name: Name): User {
+        return new User(userId, email, name)
     }
 }

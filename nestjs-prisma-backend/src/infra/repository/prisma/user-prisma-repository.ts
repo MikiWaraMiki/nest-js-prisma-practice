@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from ".prisma/client";
 import { Injectable } from "@nestjs/common";
-import { User } from "src/domain/user/User";
+import { User } from 'src/domain/user/User';
 import { UserId } from "src/domain/user/UserID";
 import { UserProfile } from "src/domain/user/UserProfile";
 import { UserRepository } from "src/domain/user/UserRepository";
@@ -20,12 +20,6 @@ export class UserPrismaRepository implements UserRepository {
                 id: user.userId.value,
                 email: user.email.value,
                 name: user.name.value,
-                profile: {
-                    create: {
-                        user_id: user.userId.value,
-                        text: user.userProfile.userProfileText.value,
-                    }
-                }
             }
         })
     }
@@ -35,27 +29,17 @@ export class UserPrismaRepository implements UserRepository {
             where: {
                 id: userID.value
             },
-            include: {
-                profile: true
-            }
         })
 
         return this.convertToModelFromRecord(result)
     }
 
-    private convertToModelFromRecord(record: UserRecord & {
-        profile: UserProfileRecord;
-    }): User {
+    private convertToModelFromRecord(record: UserRecord): User {
         const userId = UserId.reConstructor(record.id)
-        const userProfile = new UserProfile(
-            userId,
-            new UserProfileText(record.profile.text)
-        )
         return User.reConstructor(
             userId,
             new Email(record.email),
             new Name(record.name),
-            userProfile
         )
     }
 }
