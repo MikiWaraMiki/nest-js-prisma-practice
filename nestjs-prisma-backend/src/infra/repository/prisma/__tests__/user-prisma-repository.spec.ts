@@ -26,7 +26,7 @@ describe("saveメソッドのテスト", () => {
             new Email("hogehoge@example.com"),
             new Name("test1"),
         )
-        await userRepository.create(user)
+        await userRepository.save(user)
 
         const result = await userRepository.findByUserId(user.userId)
 

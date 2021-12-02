@@ -11,14 +11,27 @@ import { Name } from "src/domain/user/Name";
 export class UserPrismaRepository implements UserRepository {
     constructor(private prisma: PrismaClient) {}
 
-    async create(user: User): Promise<void> {
-        await this.prisma.user.create({
-            data: {
-                id: user.userId.value,
-                email: user.email.value,
-                name: user.name.value,
-            }
-        })
+    async save(user: User): Promise<void> {
+        const data = {
+            id: user.userId.value,
+            email: user.email.value,
+            name: user.name.value     
+        }
+
+        const result = await this.findByUserId(user.userId)
+
+        if (!result) {
+            await this.prisma.user.create({
+                data: data
+            })
+        } else {
+            await this.prisma.user.update({
+                where: {
+                    id: user.userId.value
+                },
+                data: data
+            })
+        }
     }
 
     async findByUserId(userID: UserId): Promise<User | undefined> {
