@@ -5,6 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": "16.x.x"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -15,8 +18,8 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "migrate:dev": "prisma migrate dev",
-    "migrate:test": "prisma migrate test",
-    "test": "DATABASE_URL=postgresql://root:password@127.0.0.1:5432/nestjs_test jest",
+    "migrate:test": "DATABASE_URL=postgresql://root:password@127.0.0.1:5432/nestjs_test prisma migrate deploy --preview-feature",
+    "test": "yarn migrate:test && DATABASE_URL=postgresql://root:password@127.0.0.1:5432/nestjs_test jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
@@ -29,7 +32,7 @@
     "@nestjs/mapped-types": "^1.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/platform-fastify": "^8.2.3",
-    "@prisma/client": "^3.5.0",
+    "@prisma/client": "^3.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
@@ -80,7 +83,8 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "src/(.*)": "<rootDir>/src/$1"
+      "src/(.*)": "<rootDir>/src/$1",
+      "test/(.*)": "<rootDir>/test/$1"
     }
   }
 }
