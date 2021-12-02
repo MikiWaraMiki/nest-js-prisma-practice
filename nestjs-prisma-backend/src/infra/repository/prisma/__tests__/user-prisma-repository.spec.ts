@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import {cleanupDatabase, setupDatabase} from "./util/prisma-test-helper";
+import {cleanupDatabase, setupDatabase, truncateAllTable} from "./util/prisma-test-helper";
 import {UserPrismaRepository} from "../user-prisma-repository";
 import {User} from "../../../../domain/user/User";
 import {UserId} from "../../../../domain/user/UserID";
@@ -10,8 +10,7 @@ const client = new PrismaClient();
 const userRepository = new UserPrismaRepository(client);
 
 beforeEach(async () => {
-    await cleanupDatabase();
-    await setupDatabase();
+    await truncateAllTable();
 });
 
 afterAll(async () => {
