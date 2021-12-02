@@ -1,10 +1,14 @@
-import * as util from 'util';
 import { PrismaClient, Prisma } from '@prisma/client';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const exec = util.promisify(require('child_process').exec);
-
 const IGNORE_TRUNCATE_TABLES = ['_prisma_migrations'];
+
+const prismaClient = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+})
 
 export const truncateAllTable = async (): Promise<void> => {
   const prismaClient = new PrismaClient();
@@ -23,12 +27,4 @@ export const truncateAllTable = async (): Promise<void> => {
     await prismaClient.$queryRaw(
         Prisma.sql`TRUNCATE TABLE \"public\"."${tableName}" RESTART IDENTITY CASCADE`)
   }
-};
-
-export const cleanupDatabase = async (): Promise<void> => {
-  await exec('npx prisma migrate reset --force');
-};
-
-export const setupDatabase = async (): Promise<void> => {
-  await exec('npx prisma migrate dev --preview-feature');
 };

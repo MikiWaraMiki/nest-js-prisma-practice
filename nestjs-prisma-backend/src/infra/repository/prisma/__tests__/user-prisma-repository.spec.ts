@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import {cleanupDatabase, setupDatabase, truncateAllTable} from "./util/prisma-test-helper";
+import {truncateAllTable} from "src/../test/util/prisma-test-helper";
 import {UserPrismaRepository} from "../user-prisma-repository";
-import {User} from "../../../../domain/user/User";
-import {UserId} from "../../../../domain/user/UserID";
-import {Email} from "../../../../domain/user/Email";
-import {Name} from "../../../../domain/user/Name"
+import {User} from "src/domain/user/User";
+import {UserId} from "src/domain/user/UserID";
+import {Email} from "src/domain/user/Email";
+import {Name} from "src/domain/user/Name"
 
 const client = new PrismaClient();
 const userRepository = new UserPrismaRepository(client);
