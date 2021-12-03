@@ -1,4 +1,5 @@
-import { UserId } from '../../user/UserID';
+import { DomainException } from 'src/domain/shared/exception/DomainException';
+import { UserId } from '../UserID';
 
 describe('UserID test', () => {
   describe('不変条件テスト', () => {
@@ -6,14 +7,14 @@ describe('UserID test', () => {
       const target = () => {
         UserId.reConstructor('');
       };
-      expect(target).toThrow(Error);
+      expect(target).toThrow(DomainException);
       expect(target).toThrow('ユーザーIDは必須です');
     });
     it('26文字でない場合はエラーが発生すること', () => {
       const target = () => {
         UserId.reConstructor('a'.repeat(27));
       };
-      expect(target).toThrow(Error);
+      expect(target).toThrow(DomainException);
       expect(target).toThrow('ユーザーIDの文字列長が正しくありません');
     });
     it('26文字のIDの場合はエラーが発生しないこと', () => {

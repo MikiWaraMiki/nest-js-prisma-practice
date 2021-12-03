@@ -1,4 +1,5 @@
-import { Email } from '../../user/Email';
+import { DomainException } from 'src/domain/shared/exception/DomainException';
+import { Email } from '../Email';
 
 describe('Email', () => {
   describe('不変条件例外テスト', () => {
@@ -6,14 +7,14 @@ describe('Email', () => {
       const target = () => {
         new Email('');
       };
-      expect(target).toThrow(Error);
+      expect(target).toThrow(DomainException);
       expect(target).toThrow('メールアドレスの入力は必須です');
     }),
       it('257文字以上の場合はエラーが発生すること', () => {
         const target = () => {
           new Email('a'.repeat(257));
         };
-        expect(target).toThrow(Error);
+        expect(target).toThrow(DomainException);
         expect(target).toThrow('メールアドレスの最大長は256文字です');
       }),
       test.each([
@@ -26,7 +27,7 @@ describe('Email', () => {
           const target = () => {
             new Email(invalidEmail);
           };
-          expect(target).toThrow(Error);
+          expect(target).toThrow(DomainException);
           expect(target).toThrow('メールアドレスの形式が正しくありません');
         },
       );

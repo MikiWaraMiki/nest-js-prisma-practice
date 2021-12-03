@@ -1,3 +1,4 @@
+import { DomainException } from 'src/domain/shared/exception/DomainException';
 import { ulid } from 'ulid';
 
 export class UserId {
@@ -7,11 +8,11 @@ export class UserId {
 
   private constructor(value: string) {
     if (!value) {
-      throw new Error('ユーザーIDは必須です');
+      throw new DomainException('ユーザーIDは必須です');
     }
 
     if (value.length != UserId.USERID_LENGTH) {
-      throw new Error('ユーザーIDの文字列長が正しくありません');
+      throw new DomainException('ユーザーIDの文字列長が正しくありません');
     }
 
     this.value = value;
