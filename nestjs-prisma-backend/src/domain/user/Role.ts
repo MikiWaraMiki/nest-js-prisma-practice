@@ -1,3 +1,3 @@
 const roles = ['USER', 'ADMIN'] as const;
 
-export type Role = typeof roles[number]
+export type Role = typeof roles[number];

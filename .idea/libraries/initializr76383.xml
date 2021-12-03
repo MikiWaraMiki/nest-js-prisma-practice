@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="initializr76383">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/nestjs-prisma-backend/initializr76383.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

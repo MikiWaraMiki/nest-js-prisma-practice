@@ -18,10 +18,10 @@ export const truncateAllTable = async () => {
     if (!IGNORE_TRUNCATE_TABLES.includes(tablename)) {
       try {
         await prisma.$queryRawUnsafe(
-            `TRUNCATE TABLE "public"."${tablename}" CASCADE`
-        )
-      } catch(e) {
-        console.error(e)
+          `TRUNCATE TABLE "public"."${tablename}" CASCADE`,
+        );
+      } catch (e) {
+        console.error(e);
       }
     }
   }
