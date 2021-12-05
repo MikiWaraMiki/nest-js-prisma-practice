@@ -1,1 +1,4 @@
 docker/postgres/data
+
+nestjs-prisma-backend/.env
+nestjs-prisma-backend/.env
