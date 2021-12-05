@@ -12,7 +12,8 @@ model User {
   email        String         @unique
   name         String?
   createdAt    DateTime       @default(now())
-  UserInTenant UserInTenant[]
+  userInTenant UserInTenant[]
+  userAuth0Account UserAuth0Account?
 }
 
 model Tenant {
@@ -20,7 +21,7 @@ model Tenant {
   name         String         @db.VarChar(256)
   createdAt    DateTime       @default(now())
   status       String
-  UserInTenant UserInTenant[]
+  userInTenant UserInTenant[]
 }
 
 model UserInTenant {
@@ -31,4 +32,11 @@ model UserInTenant {
   tenant    Tenant @relation(fields: [tenant_id], references: [id])
 
   @@unique([tenant_id, user_id])
+}
+
+model UserAuth0Account {
+  auth0_uuid String @id @db.Char(24)
+  user_id String @db.Char(26)
+  user User @relation(fields: [user_id], references: [id])
+  created_at DateTime @default(now())
 }
