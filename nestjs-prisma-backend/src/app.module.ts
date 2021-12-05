@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { SignupController } from './presentation/api/auth/signup-controller';
+import { NestJsAuthZeroSessionProvider } from './presentation/shared/session/authzero.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [NestJsAuthZeroSessionProvider],
+  controllers: [
+    SignupController
+  ],
 })
 export class AppModule {}
