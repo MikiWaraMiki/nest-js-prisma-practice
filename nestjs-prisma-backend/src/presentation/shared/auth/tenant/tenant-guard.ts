@@ -1,5 +1,5 @@
-import { CanActivate, ExecutionContext, Inject, Injectable } from "@nestjs/common";
-import { Observable } from "rxjs";
+import { CanActivate, ExecutionContext, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { TenantName } from "src/domain/tenant/tenant-name";
 import { TenantRepository } from "src/domain/tenant/tenant-repository";
 import { TenantPrismaRepository } from "src/infra/repository/prisma/tenant-prisma-repository";
 
@@ -10,13 +10,20 @@ export class TenantGuard implements CanActivate {
     private readonly tenantRepository: TenantRepository
   ) {}
 
-  canActivate(
+  async canActivate(
     context: ExecutionContext
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  ): Promise<boolean> {
     const request = context.switchToHttp().getRequest()
 
-    console.log(request)
+    const currentTenant = request.currentTenant
+
+    if (!currentTenant) {
+      throw new InternalServerErrorException('currentTenant is not setted')
+    }
+
+    const auth0UserUUID = request.user.sub
 
     return true
   }
+
 }

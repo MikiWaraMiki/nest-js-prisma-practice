@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { InfraModule } from './infra/infra.module';
 import { SignupController } from './presentation/api/auth/signup-controller';
 import { NestJsAuthZeroModule } from './presentation/shared/auth/jwt/authzero.module';
+import { CurrentTenantMiddleware } from './presentation/shared/tenant/current-tenant.middleware';
 
 @Module({
   imports: [
@@ -19,4 +20,8 @@ import { NestJsAuthZeroModule } from './presentation/shared/auth/jwt/authzero.mo
     SignupController
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(CurrentTenantMiddleware).forRoutes("*")
+  }
+}

@@ -6,9 +6,11 @@ import { TenantGuard } from "src/presentation/shared/auth/tenant/tenant-guard";
 export class SignupController {
   constructor(){}
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), TenantGuard)
   @Get()
-  async create(@Request() req): Promise<void> {
-    console.log(req.user)
+  async create(
+    @Request() req
+  ): Promise<void> {
+    console.log(req.currentTenant)
   }
 }
