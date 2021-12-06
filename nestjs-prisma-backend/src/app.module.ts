@@ -1,9 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { SignupController } from './presentation/api/auth/signup-controller';
-import { NestJsAuthZeroSessionProvider } from './presentation/shared/session/authzero.module';
+import { NestJsAuthZeroModule } from './presentation/shared/session/authzero.module';
 
 @Module({
-  imports: [NestJsAuthZeroSessionProvider],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: [
+        '.env.development',
+        '.env'
+      ]
+    }),
+    NestJsAuthZeroModule
+  ],
   controllers: [
     SignupController
   ],
