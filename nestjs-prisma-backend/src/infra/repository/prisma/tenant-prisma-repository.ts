@@ -42,6 +42,18 @@ export class TenantPrismaRepository implements TenantRepository {
     return this.convertToModelFromRecord(record)
   }
 
+  async findByTenantName(tenantName: TenantName): Promise<Tenant | undefined> {
+    const record = await this.prisma.tenant.findFirst({
+      where: {
+        name: tenantName.value
+      }
+    })
+
+    if(!record) return undefined
+
+    return this.convertToModelFromRecord(record)
+  }
+
   private convertToModelFromRecord(record: TenantRecord): Tenant {
     return Tenant.reConstructor(
       TenantId.reConstructor(record.id),

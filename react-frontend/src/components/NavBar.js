@@ -73,9 +73,19 @@ const NavBar = () => {
                     id="qsLoginBtn"
                     color="primary"
                     className="btn-margin"
-                    onClick={() => loginWithRedirect()}
+                    onClick={() => loginWithRedirect({
+                      organization: 'org_XNv4e6BU2KPZ3nzh'
+                    })}
                   >
                     Log in
+                  </Button>
+                  <Button
+                    id="qsLoginBtn"
+                    color="primary"
+                    className="btn-margin"
+                    onClick={() => loginWithRedirect({screen_hint: 'signup'})}
+                  >
+                    Signup
                   </Button>
                 </NavItem>
               )}
@@ -120,6 +130,18 @@ const NavBar = () => {
                     onClick={() => loginWithRedirect({})}
                   >
                     Log in
+                  </Button>
+                </NavItem>
+                <NavItem>
+                  <Button
+                    id="qsSignupBtn"
+                    color="primary"
+                    block
+                    onClick={() => loginWithRedirect({
+                      screen_hint: 'signup'
+                    })}
+                  >
+                    Signup
                   </Button>
                 </NavItem>
               </Nav>
