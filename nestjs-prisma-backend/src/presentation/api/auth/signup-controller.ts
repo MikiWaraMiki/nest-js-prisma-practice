@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { JwtAuthGuard } from "src/presentation/shared/session/jwt-auth.guard";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller('/api/v1/auth/signup')
 export class SignupController {
   constructor(){}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Get()
-  async test(): Promise<void> {
+  async create(): Promise<void> {
     console.log('called')
   }
 }

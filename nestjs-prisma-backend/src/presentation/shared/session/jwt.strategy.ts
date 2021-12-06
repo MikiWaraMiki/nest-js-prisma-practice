@@ -23,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: unknown): Promise<unknown> {
+    console.log(payload)
     return payload
   }
 }
