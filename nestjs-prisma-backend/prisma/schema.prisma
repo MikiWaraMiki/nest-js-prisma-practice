@@ -12,7 +12,7 @@ model User {
   email        String         @db.VarChar(256) @unique
   name         String?
   createdAt    DateTime       @default(now())
-  userInTenant UserInTenant[]
+  joinedTenants UserJoinedTenant[]
   userAuthInfo UserAuthInfo?
 }
 
@@ -31,7 +31,7 @@ model Tenant {
   name         String         @db.VarChar(256)
   createdAt    DateTime       @default(now())
   status       String
-  userInTenant UserInTenant[]
+  tenantUsers UserJoinedTenant[]
   tenantAuthInfo TenantAuthInfo?
   userAuthInfo UserAuthInfo[]
 }
@@ -45,7 +45,7 @@ model TenantAuthInfo {
   @@unique([tenant_auth0_id, tenant_id])
 }
 
-model UserInTenant {
+model UserJoinedTenant {
   id        Int    @id @default(autoincrement())
   user_id   String @db.Char(26)
   tenant_id String @db.Char(26)
