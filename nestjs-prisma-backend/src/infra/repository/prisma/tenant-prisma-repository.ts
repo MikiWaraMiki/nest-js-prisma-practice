@@ -1,15 +1,19 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaClient, Tenant as TenantRecord } from "@prisma/client";
+import { Inject, Injectable } from "@nestjs/common";
+import { Prisma, PrismaClient, Tenant as TenantRecord } from "@prisma/client";
 import { Tenant } from "src/domain/tenant/tenant";
 import { TenantId } from "src/domain/tenant/tenant-id";
 import { TenantName } from "src/domain/tenant/tenant-name";
 import { TenantRepository } from "src/domain/tenant/tenant-repository";
 import { TenantStatus } from "src/domain/tenant/tenant-status";
+import { PrismaService } from "./prisma-service";
 
 
 @Injectable()
 export class TenantPrismaRepository implements TenantRepository {
-  constructor(private prisma: PrismaClient){}
+  constructor(
+    @Inject(PrismaService)
+    private prisma: PrismaClient
+  ){}
 
   async save(tenant: Tenant): Promise<void> {
     const data = {

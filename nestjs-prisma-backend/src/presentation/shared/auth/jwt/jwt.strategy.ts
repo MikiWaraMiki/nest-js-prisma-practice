@@ -1,14 +1,8 @@
 import { Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { log } from "console";
 import { passportJwtSecret } from "jwks-rsa";
 import { Strategy, ExtractJwt } from 'passport-jwt'
-import { TenantAuthInfoRepository } from "src/domain/tenant-auth-info/tenant-auth-info-repository";
-import { TenantName } from "src/domain/tenant/tenant-name";
-import { TenantRepository } from "src/domain/tenant/tenant-repository";
-import { UserAuthInfoRepository } from "src/domain/user-auth-info/user-auth-info-repository";
-import { Auth0PayloadInterface } from "src/presentation/shared/auth/auth0-payload-interface";
-import { UserSession } from "src/presentation/shared/session/user-session";
+import { Auth0PayloadInterface } from "src/presentation/shared/auth/jwt/auth0-payload-interface";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -25,12 +19,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       audience: process.env.AUTH0_AUDIENCE,
       issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-      algorithms: ['RS256'],
-      passReqToCallback: true
+      algorithms: ['RS256']
     })
   }
 
-  async validate(req: Request, payload: Auth0PayloadInterface): Promise<any> {
+  async validate(payload: Auth0PayloadInterface): Promise<any> {
+    console.log(payload)
     return payload
   }
 }
