@@ -9,6 +9,16 @@ export class UserAuthInfoPrismaRepository implements UserAuthInfoRepository {
     private prisma: PrismaClient
   ){}
 
+  async save(userAuthInfo: UserAuthInfo): Promise<void> {
+    await this.prisma.userAuthInfo.create({
+      data: {
+        user_id: userAuthInfo.userId.value,
+        auth0_user_id: userAuthInfo.auth0UUID,
+        created_at: new Date()
+      }
+    })
+  }
+
   async findByAuth0UUID(auth0UUID: string): Promise<UserAuthInfo | undefined> {
     const result = await this.prisma.userAuthInfo.findUnique({
       where: {

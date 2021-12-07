@@ -18,12 +18,10 @@ model User {
 
 model UserAuthInfo {
   user_id String @id @db.Char(26)
-  tenant_id String @db.Char(26)
   auth0_user_id String @db.VarChar(256) @unique
   created_at DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id])
-  tenant Tenant @relation(fields: [tenant_id], references: [id])
 }
 
 model Tenant {
@@ -33,7 +31,6 @@ model Tenant {
   status       String
   tenantUsers UserJoinedTenant[]
   tenantAuthInfo TenantAuthInfo?
-  userAuthInfo UserAuthInfo[]
 }
 
 model TenantAuthInfo {
