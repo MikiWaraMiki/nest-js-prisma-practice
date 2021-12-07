@@ -34,8 +34,7 @@ export class UserAuthInfoPrismaRepository implements UserAuthInfoRepository {
   private mapToEntity(record: UserAuthInfoRecord): UserAuthInfo {
     return new UserAuthInfo(
       UserId.reConstructor(record.user_id),
-      record.auth0_user_id,
-      TenantId.reConstructor(record.tenant_id)
+      record.auth0_user_id
     )
   }
 }
